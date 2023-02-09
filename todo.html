@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToDo List</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            color: whitesmoke;
+        }
+        #bg-video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: -100;
+            transform: translateX(-50%) translateY(-50%);
+        }
+        #todocontainer {
+            width: 50%;
+            margin: 0 auto;
+            text-align: center;
+        }
+            input[type="text"] {
+            padding: 5px;
+            margin-bottom: 10px;
+        }
+            button {
+            padding: 5px 10px;
+            background-color: rgb(5, 43, 168);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            color: whitesmoke;
+        }
+            ul {
+            list-style-type: none;
+            padding: 0;
+        }
+            li {
+            padding: 5px;
+            margin-bottom: 5px;
+            background-color: rgb(228, 68, 68);
+            color: white;
+            /* border-radius: 50%; */
+        }
+            input[type="checkbox"] {
+            margin-right: 10px;
+        }
+            .strike-through {
+            text-decoration: line-through;
+        }
+            /* #colorList{
+            background-color: rgb(222, 208, 9);
+        } */
+    </style>
+</head>
+<body>
+    <video id="bg-video" autoplay loop>
+        <source src="ink.mp4" type="video/mp4">
+    </video>
+    <div id="todocontainer">
+        <p>To Do List For Today <i id="today"></i></p>
+        <p>Completed Task: <span id="checkedCounter">0</span></p>
+        <input type="text" id="inputColor">
+        <button id="addColor">Add</button>
+        <ul id="colorList">
+        </ul>
+    </div>
+</body>
+    <script>
+        
+        const addColorButton = document.getElementById("addColor");
+        const inputColor = document.getElementById("inputColor");
+        const colorList = document.getElementById("colorList");
+        const checkedCounter = document.getElementById("checkedCounter");
+        const dateContainer = document.getElementById("today");
+        const currentDate = new Date();
+        dateContainer.innerText = "("+currentDate.toDateString()+")";
+        addColorButton.addEventListener("click", function () {
+        const color = inputColor.value;
+        if (color) {
+            const li = document.createElement("li");
+            const checkbox = document.createElement("input");
+            checkbox.type = "checkbox";
+            checkbox.addEventListener("click", function () {
+            li.style.backgroundColor="green";
+            li.classList.toggle("strike-through");
+            checkedCounter.innerText = parseInt(checkedCounter.innerText) + (li.classList.contains("strike-through") ? 1 : -1);
+            });
+            li.appendChild(checkbox);
+            li.appendChild(document.createTextNode(color));
+            colorList.appendChild(li);
+        }
+        });
+    </script>
+</html>
